@@ -3,7 +3,10 @@ package mimuw.data;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import mimuw.Car;
+import mimuw.CarLot;
 import mimuw.User;
+import org.springframework.beans.CachedIntrospectionResults;
 
 import java.sql.*;
 import java.util.Locale;
@@ -142,6 +145,30 @@ public class DatabaseManager {
                 getUserInfo(user, resultSet);
                 return true;
             } else return false;
+        } catch (SQLException ex) {
+            System.out.println("Failed to create statement.");
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void populateCarLot(CarLot carLot) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Car WHERE brand = 'Mercedes-Benz' FETCH FIRST 20 ROWS ONLY ");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                var car = new Car();
+                car.setCarId(resultSet.getInt("car_id"));
+                car.setBrand(resultSet.getString("brand"));
+                car.setModel(resultSet.getString("model"));
+                car.setHorsepower(resultSet.getInt("horsepower"));
+                car.setYear(resultSet.getInt("year"));
+                car.setMileage(resultSet.getInt("mileage"));
+                car.setGearbox(resultSet.getString("gearbox"));
+                car.setCategory(resultSet.getString("category"));
+                carLot.addCarToLot(car);
+            }
+
         } catch (SQLException ex) {
             System.out.println("Failed to create statement.");
             throw new RuntimeException(ex);

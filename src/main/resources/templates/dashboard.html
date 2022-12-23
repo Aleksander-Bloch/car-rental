@@ -20,21 +20,17 @@
     >
         <div class="mask" style="background-color: rgba(0,0,0,0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
-                <div class="text-white" th:object="${user}">
+                <div class="text-white">
                     <h1 class="mb-3">TopG Car Rental</h1>
                     <h5 class="mb-4" th:text="${'Welcome back, ' + user.name + ' ' + user.surname + '!'}"></h5>
 
+                    <ul class="list-group list-group-horizontal" th:each="car : ${carLot.cars}">
+                        <li class="list-group-item flex-fill list-group-item-dark" th:text="${car.brand}">Brand</li>
+                        <li class="list-group-item flex-fill list-group-item-dark" th:text="${car.model}">Model</li>
+                        <li class="list-group-item flex-fill list-group-item-dark" th:text="${car.horsepower}">Horsepower</li>
+                        <li class="list-group-item flex-fill list-group-item-dark" th:text="${car.year}">Year</li>
+                    </ul>
 
-                    <a
-                            class="btn btn-outline-light btn-lg m-2"
-                            th:href="@{/login}"
-                            id="login"
-                    >Log In</a>
-                    <a
-                            class="btn btn-outline-light btn-lg m-2"
-                            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                    >Sign Up</a>
-                    <h1 class="mb-3"></h1> <!-- Space -->
 
 
                 </div>
