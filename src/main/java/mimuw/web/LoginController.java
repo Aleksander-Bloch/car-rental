@@ -3,7 +3,6 @@ package mimuw.web;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import mimuw.User;
-import mimuw.data.DatabaseManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +33,7 @@ public class LoginController {
             return "login";
         }
 
-        DatabaseManager db = DatabaseManager.getInstance();
-        if (!db.isValidUser(user)) {
+        if (!user.retrieveUserDataIfValid()) {
             return "login";
         }
 

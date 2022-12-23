@@ -27,6 +27,10 @@ public class DatabaseManager {
         return instance;
     }
 
+    public Connection connection() {
+        return connection;
+    }
+
     private ResourceBundle getResourceBundle() {
         Locale locale = new Locale("pl", "PL");
         return ResourceBundle.getBundle("dbconfig", locale);
@@ -113,65 +117,5 @@ public class DatabaseManager {
     public void closeAll() {
         closeConnection();
         closeSSH();
-    }
-
-    private void getUserInfo(User user, ResultSet userInfo) throws SQLException {
-        // User's client data.
-        user.setPesel(userInfo.getString("pesel"));
-        user.setAmountSpent(userInfo.getInt("amount_spent"));
-        user.setUserRole(userInfo.getString("user_role"));
-        user.setStatus(userInfo.getString("status"));
-
-        // Querying user's personal data.
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE pesel = ?");
-        statement.setString(1, user.getPesel());
-
-        // User's personal data.
-        ResultSet nameAndSurname = statement.executeQuery();
-        if (!nameAndSurname.next()) return;
-        user.setName(nameAndSurname.getString("name"));
-        user.setSurname(nameAndSurname.getString("surname"));
-    }
-
-    public boolean isValidUser(User user) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE login = ? AND password = ?");
-            statement.setString(1, user.getLogin());
-            statement.setString(2, user.getPassword());
-            ResultSet resultSet = statement.executeQuery();
-
-            // Retrieve user data.
-            if (resultSet.next()) {
-                getUserInfo(user, resultSet);
-                return true;
-            } else return false;
-        } catch (SQLException ex) {
-            System.out.println("Failed to create statement.");
-            throw new RuntimeException(ex);
-        }
-    }
-
-    public void populateCarLot(CarLot carLot) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Car WHERE brand = 'Mercedes-Benz' FETCH FIRST 20 ROWS ONLY ");
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                var car = new Car();
-                car.setCarId(resultSet.getInt("car_id"));
-                car.setBrand(resultSet.getString("brand"));
-                car.setModel(resultSet.getString("model"));
-                car.setHorsepower(resultSet.getInt("horsepower"));
-                car.setYear(resultSet.getInt("year"));
-                car.setMileage(resultSet.getInt("mileage"));
-                car.setGearbox(resultSet.getString("gearbox"));
-                car.setCategory(resultSet.getString("category"));
-                carLot.addCarToLot(car);
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Failed to create statement.");
-            throw new RuntimeException(ex);
-        }
     }
 }
