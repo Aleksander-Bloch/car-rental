@@ -12,7 +12,6 @@
 <body style="background-color: black;">
 
 <header>
-
     <!-- Background image -->
     <div class="p-5 text-center bg-image">
         <div class="mask">
@@ -34,7 +33,7 @@
 
                                 <hr style="border-top: 2px solid white; opacity: 1">
 
-                                <img src="/gtr.jpg" class="card-img">
+                                <img th:src="@{${'/images/' + car.carId + '.jpg'}}" class="card-img">
 
                                 <a
                                         class="btn btn-outline-light btn-lg m-2"
@@ -44,8 +43,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

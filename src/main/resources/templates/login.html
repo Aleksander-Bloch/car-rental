@@ -30,35 +30,39 @@
 <body>
 
 <header>
-
     <!-- Background image -->
     <div
             class="p-5 text-center bg-image"
-            style="background-image: url('/gtr.jpg'); height: 1000px;"
+            style="background-image: url('/background/background.jpg'); height: 1000px;"
     >
         <div class="mask" style="background-color: rgba(0,0,0,0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="text-white">
                     <h1 class="mb-3">TopG Car Rental</h1>
 
+                    <!-- User information form -->
                     <form method="POST" th:object="${user}">
-
+                        <!-- Login input -->
                         <div class="form-group">
                             <input type="text" th:field="*{login}" class="form-control" placeholder="Login">
                         </div>
 
-                        <h1 class="mb-3"></h1> <!-- Space -->
+                        <!-- Space -->
+                        <h1 class="mb-3"></h1>
 
+                        <!-- Password input -->
                         <div class="form-group">
                             <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
                         </div>
 
-                        <h1 class="mb-3"></h1> <!-- Space -->
-                        <button>Log In</button>
+                        <!-- Space -->
+                        <h1 class="mb-3"></h1>
 
+                        <!-- Formatted login button -->
+                        <button>Log In</button>
                     </form>
 
-                    <h1 class="mb-3"></h1>
+                    <h1 class="mb-3"></h1> <!-- Space -->
                 </div>
             </div>
         </div>

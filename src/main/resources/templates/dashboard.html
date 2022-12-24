@@ -12,11 +12,10 @@
 <body>
 
 <header>
-
     <!-- Background image -->
     <div
             class="p-5 text-center bg-image"
-            style="background-image: url('/gtr.jpg'); height: 1000px;"
+            style="background-image: url('/background/background.jpg'); height: 1000px;"
     >
         <div class="mask" style="background-color: rgba(0,0,0,0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
@@ -24,18 +23,19 @@
                     <h1 class="mb-3">TopG Car Rental</h1>
                     <h5 class="mb-4" th:text="${'Welcome back, ' + user.name + ' ' + user.surname + '!'}"></h5>
 
+                    <!-- Cars rented by the user -->
                     <a
                             class="btn btn-outline-light btn-lg m-2"
                             th:href="@{/orders}"
                     >My orders</a>
 
+                    <!-- Currently available cars to rent -->
                     <a
                             class="btn btn-outline-light btn-lg m-2"
                             th:href="@{/cars}"
                     >Available cars</a>
 
                     <h1 class="mb-3"></h1> <!-- Space -->
-
                 </div>
             </div>
         </div>
