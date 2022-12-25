@@ -25,10 +25,10 @@
                     <div class="row">
                         <div class="col-sm-6" th:each="car : ${carLot.cars}">
                             <div class="card" style="background-color: black;">
-                                <div class="card-body" style="padding-bottom: 0px">
+                                <div class="card-body" style="padding-bottom: 0">
                                     <h2 class="card-title" th:text="${car.brand + ' ' + car.model}">Mercedes-Benz
                                         GTR</h2>
-                                    <p style="font-style: italic; margin-bottom: 0px"
+                                    <p style="font-style: italic; margin-bottom: 0"
                                        th:text="${'Rental period: ' + car.startDate + ' ~ ' + car.endDate}">
                                         Rental period: 2021-09-21 ~ 2022-12-23</p>
                                 </div>
@@ -38,15 +38,35 @@
 
                                 <!-- Maybe placeholder in the future? -->
                                 <img class="card-img"
+                                     style="margin-bottom: 10px"
                                      src="/static/background/background.jpg"
                                      th:src="@{${'/images/' + car.carId + '.jpg'}}"
                                 >
 
-                                <a
-                                        class="btn btn-outline-light btn-lg m-2"
-                                        th:href="@{/login}"
-                                        id="login"
-                                >Remove</a>
+                                <!-- Displaying information if operation ended successfully (?) -->
+                                <div style="display:flex">
+                                    <form method="POST"
+                                          th:action="@{/dashboard/orders/remove/{carId}(carId=${car.carId})}"
+                                          style="box-sizing: border-box; width: 48%; margin-right: 20px">
+                                        <input type="hidden"/>
+                                        <a
+                                                class="btn btn-outline-danger btn-lg m-2"
+                                                style="box-sizing: border-box; width: 100%;"
+                                                onclick="this.parentNode.submit();"
+                                        >Remove</a>
+                                    </form>
+
+                                    <form method="POST"
+                                          th:action="@{/dashboard/orders/extend/{carId}(carId=${car.carId})}"
+                                          style="box-sizing: border-box; width: 48%">
+                                        <input type="hidden"/>
+                                        <a
+                                                class="btn btn-outline-light btn-lg m-2"
+                                                style="box-sizing: border-box; width: 100%"
+                                                onclick="this.parentNode.submit();"
+                                        >Extend</a>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

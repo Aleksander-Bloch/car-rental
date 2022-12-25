@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Slf4j
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("dashboard/orders")
 @SessionAttributes({"user", "carLot"})
 public class OrdersController {
 

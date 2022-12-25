@@ -18,9 +18,12 @@ public class CarLot {
     }
 
     public void getUserCars(User user) {
+        // Clear car lot on reload.
+        cars.clear();
+        System.out.println("User " + user.getLogin() + " is redirecting to orders page. Querying for his cars...");
         var connection = DatabaseManager.getInstance().connection();
         try {
-            // SQL query to get all user cars from the database.
+            // Retrieving user's cars from the database.
             String sql = "SELECT * FROM rental A LEFT JOIN car B ON A.car_id = B.car_id WHERE login = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getLogin());
@@ -46,7 +49,7 @@ public class CarLot {
 
                 cars.add(car);
             }
-
+            System.out.println("Query executed successfully. Found " + cars.size() + " cars.");
         } catch (SQLException ex) {
             System.out.println("Failed to create statement.");
             throw new RuntimeException(ex);

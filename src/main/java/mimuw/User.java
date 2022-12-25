@@ -47,7 +47,9 @@ public class User {
     }
 
     // Validate user's login and password and fill rest of the information.
+    // Returns true if given data matches some record in the database, false otherwise.
     public boolean retrieveUserDataIfValid() {
+        System.out.println("User " + login + " is trying to log in. Querying for his data...");
         var connection = DatabaseManager.getInstance().connection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE login = ? AND password = ?");
@@ -57,9 +59,13 @@ public class User {
 
             // Retrieve user data.
             if (userInfo.next()) {
+                System.out.println("User found. Redirecting to dashboard.");
                 getUserData(userInfo, connection);
                 return true;
-            } else return false;
+            } else {
+                System.out.println("User not found. Redirecting to login page.");
+                return false;
+            }
         } catch (SQLException ex) {
             System.out.println("Failed to create statement.");
             throw new RuntimeException(ex);
