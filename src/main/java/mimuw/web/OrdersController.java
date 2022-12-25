@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import mimuw.CarLot;
 import mimuw.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+
+import static mimuw.RentedCar.removeRentedCar;
+import static mimuw.RentedCar.extendRentalPeriod;
 
 @Slf4j
 @Controller
@@ -29,5 +29,21 @@ public class OrdersController {
         carLot.getUserCars(user);
 
         return "orders";
+    }
+
+    @PostMapping("/remove/{carId}")
+    public String removeOrder(@PathVariable String carId) {
+
+        removeRentedCar(Integer.parseInt(carId));
+
+        return "redirect:/dashboard/orders";
+    }
+
+    @PostMapping("/extend/{carId}")
+    public String extendOrder(@PathVariable String carId) {
+
+        extendRentalPeriod(Integer.parseInt(carId));
+
+        return "redirect:/dashboard/orders";
     }
 }
