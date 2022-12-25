@@ -7,6 +7,18 @@
     margin-bottom: 10px;
 }
 
+.platinum-status {
+    color: #b0f7ff;
+}
+
+.gold-status {
+    color: #ffe449
+}
+
+.bronze-status {
+    color: #9c5221;
+}
+
 .button-login {
     background-color: #ddd;
     border: none;
@@ -22,4 +34,10 @@
 
 .button-login:hover {
     background-color: #f1f1f1;
+}
+
+.button-rent {
+    box-sizing: border-box;
+    width: 32%;
+    margin-right: auto;
 }

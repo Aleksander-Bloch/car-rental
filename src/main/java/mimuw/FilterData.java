@@ -11,16 +11,17 @@ import java.util.List;
 
 @Data
 public class FilterData {
+    public final static String NULL = "null";
     private List<String> brands = new ArrayList<>();
     private List<String> years = new ArrayList<>();
     private List<String> gearboxes = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
     boolean filtersAvailable = false;
 
-    private String selectedBrand;
-    private String selectedYear;
-    private String selectedGearbox;
-    private String selectedCategory;
+    private String selectedBrand = NULL;
+    private String selectedYear = NULL;
+    private String selectedGearbox = NULL;
+    private String selectedCategory = NULL;
 
     List<String> getFilterOptions(String column, Connection connection) throws SQLException {
         ArrayList<String> options = new ArrayList<>();
@@ -38,10 +39,10 @@ public class FilterData {
     }
 
     public void clearFilters() {
-        selectedBrand = null;
-        selectedYear = null;
-        selectedGearbox = null;
-        selectedCategory = null;
+        selectedBrand = NULL;
+        selectedYear = NULL;
+        selectedGearbox = NULL;
+        selectedCategory = NULL;
         if (filtersAvailable) return;
         var connection = DatabaseManager.getInstance().connection();
         try {

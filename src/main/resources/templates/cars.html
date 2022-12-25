@@ -23,7 +23,7 @@
                     <!-- Header div -->
                     <div class="title-1">
                         <img src="/static/background/logo.png" th:src="@{/background/logo.png}"
-                             style="background: transparent; width: 10%; height: auto;">
+                             style="background: transparent; width: 10%; height: auto;" alt="...">
                         <h1 style="margin-bottom: 5px;">TopG Car Rental</h1>
                     </div>
                     <h5>Available cars:</h5>
@@ -88,6 +88,8 @@
                         </div>
 
 
+                        <!-- TODO: add range sliders for horsepower and mileage -->
+
                         <!--                    <div>-->
                         <!--                        <label for="customRange1">Volume</label>-->
                         <!--                        <input type="range" class="form-range" min="0" max="5" id="customRange1"-->
@@ -98,6 +100,8 @@
                         <!--                        <input type="range" class="form-range" min="0" max="5" id="customRange2"-->
                         <!--                               style="width: 25%;">-->
                         <!--                    </div>-->
+
+                        <!-- TODO: add button-filter -->
                         <button class="button-login" type="submit">Filter</button>
                     </form>
 
@@ -117,33 +121,46 @@
                                      style="margin-bottom: 10px"
                                      src="/static/background/background.jpg"
                                      th:src="@{${'/images/' + car.carId + '.jpg'}}"
-                                >
+                                     alt="...">
 
                                 <!-- Displaying information if operation ended successfully (?) -->
                                 <div style="display:flex">
-                                    <form method="POST"
-                                          th:action="@{/dashboard/orders/remove/{carId}(carId=${car.carId})}"
-                                          style="box-sizing: border-box; width: 48%; margin-right: 20px">
-                                        <input type="hidden"/>
-                                        <a
-                                                class="btn btn-outline-danger btn-lg m-2"
-                                                style="box-sizing: border-box; width: 100%;"
-                                                onclick="this.parentNode.submit();"
-                                        >Remove</a>
-                                    </form>
-
-                                    <form method="POST"
-                                          th:action="@{/dashboard/orders/extend/{carId}(carId=${car.carId})}"
-                                          style="box-sizing: border-box; width: 48%">
+                                    <!-- Day rate -->
+                                    <form class="button-rent" method="POST"
+                                          th:action="@{/dashboard/cars/rent/day/{carId}(carId=${car.carId})}">
                                         <input type="hidden"/>
                                         <a
                                                 class="btn btn-outline-light btn-lg m-2"
-                                                style="box-sizing: border-box; width: 100%"
+                                                style="box-sizing: border-box; width: 100%;"
                                                 onclick="this.parentNode.submit();"
-                                        >Extend</a>
+                                                th:text="${car.dayRate + '$/day'}">
+                                            >300$/day</a>
+                                    </form>
+
+                                    <!-- Week rate -->
+                                    <form class="button-rent" method="POST"
+                                          th:action="@{/dashboard/cars/rent/week/{carId}(carId=${car.carId})}">
+                                        <input type="hidden"/>
+                                        <a
+                                                class="btn btn-outline-light btn-lg m-2"
+                                                style="box-sizing: border-box; width: 100%;"
+                                                onclick="this.parentNode.submit();"
+                                                th:text="${car.weekRate + '$/week'}">
+                                            >1500$/week</a>
+                                    </form>
+
+                                    <!-- Month rate -->
+                                    <form class="button-rent" method="POST"
+                                          th:action="@{/dashboard/cars/rent/month/{carId}(carId=${car.carId})}">
+                                        <input type="hidden"/>
+                                        <a
+                                                class="btn btn-outline-light btn-lg m-2"
+                                                style="box-sizing: border-box; width: 100%;"
+                                                onclick="this.parentNode.submit();"
+                                                th:text="${car.monthRate + '$/month'}">
+                                            >11000$/month</a>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>

@@ -27,6 +27,23 @@
                     <h5 class="main-2" th:text="${'Welcome back, ' + user.name + ' ' + user.surname + '!'}">
                         Welcome back, John Doe!
                     </h5>
+                    <h5 class="main-2" th:text="${'Amount spent: ' + user.amountSpent + '$'}">
+                        Amount spent: 2000$
+                    </h5>
+
+                    <!-- Rendering one of the status spans -->
+                    <h5 class="main-2">
+                        Membership status:
+
+                        <span th:text="${user.status}" th:if="${user.status == 'Bronze'}"
+                              class="bronze-status" th:class="bronze-status">Bronze</span>
+
+                        <span th:text="${user.status}" th:if="${user.status == 'Gold'}"
+                              class="gold-status" th:class="gold-status">Gold</span>
+
+                        <span th:text="${user.status}" th:if="${user.status == 'Platinum'}"
+                              class="platinum-status" th:class="platinum-status">Platinum</span>
+                    </h5>
 
                     <!-- Cars rented by the user -->
                     <a

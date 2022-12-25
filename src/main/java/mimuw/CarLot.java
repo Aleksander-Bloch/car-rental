@@ -49,6 +49,26 @@ public class CarLot {
         }
     }
 
+    private String getSqlStatement(FilterData filter) {
+        String sql = "SELECT * FROM car A LEFT JOIN price B ON A.car_id = B.car_id ";
+
+        // Compose the query based on the filters.
+        String conditions = "WHERE A.car_id NOT IN (SELECT car_id FROM rental)";
+        if (!filter.getSelectedBrand().equals(FilterData.NULL)) {
+            conditions += " AND brand = '" + filter.getSelectedBrand() + "'";
+        }
+        if (!filter.getSelectedYear().equals(FilterData.NULL)) {
+            conditions += " AND year = '" + filter.getSelectedYear() + "'";
+        }
+        if (!filter.getSelectedGearbox().equals(FilterData.NULL)) {
+            conditions += " AND gearbox = '" + filter.getSelectedGearbox() + "'";
+        }
+        if (!filter.getSelectedCategory().equals(FilterData.NULL)) {
+            conditions += " AND category = '" + filter.getSelectedCategory() + "'";
+        }
+        return sql + conditions;
+    }
+
     public void getAvailableCars(FilterData filter) {
         // Clear car lot on reload.
         cars.clear();
@@ -56,16 +76,23 @@ public class CarLot {
         var connection = DatabaseManager.getInstance().connection();
         try {
             // Retrieving user's cars from the database.
-            String sql = "SELECT * FROM car WHERE car_id NOT IN (SELECT car_id FROM rental)";
+            String sql = getSqlStatement(filter);
             PreparedStatement statement = connection.prepareStatement(sql);
 
             // Execute the query and get the result set.
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                var car = new Car();
+                var car = new AvailableCar();
                 // Car data.
                 downloadCar(resultSet, car);
+
+                // Pricing data.
+                car.setDayRate(resultSet.getString("day_rate"));
+                car.setWeekRate(resultSet.getString("week_rate"));
+                car.setMonthRate(resultSet.getString("month_rate"));
+
+                // Adding car to the car lot.
                 cars.add(car);
             }
             System.out.println("Query executed successfully. Found " + cars.size() + " cars.");
