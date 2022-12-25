@@ -1,9 +1,7 @@
 package mimuw.web;
 
 import lombok.extern.slf4j.Slf4j;
-import mimuw.CarLot;
-import mimuw.FilterData;
-import mimuw.User;
+import mimuw.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +38,42 @@ public class AvailableCarsController {
     public String applyFilter(FilterData filter) {
         // Just reloading the page with new filter.
         filter.printSelectedFilters();
+        return "redirect:/dashboard/cars";
+    }
+
+    @PostMapping("/rent/day/{carId}")
+    public String rentCarDay(@PathVariable String carId, User user, CarLot carLot) {
+
+        // Car object with all necessary data. (id, name, price, etc.)
+        AvailableCar carToRent = (AvailableCar) carLot.findCarById(Integer.parseInt(carId));
+
+        // Renting car for 1 day.
+        user.rentCar(carToRent, Pricing.DAY);
+
+        return "redirect:/dashboard/cars";
+    }
+
+    @PostMapping("/rent/week/{carId}")
+    public String rentCarWeek(@PathVariable String carId, User user, CarLot carLot) {
+
+        // Car object with all necessary data. (id, name, price, etc.)
+        AvailableCar carToRent = (AvailableCar) carLot.findCarById(Integer.parseInt(carId));
+
+        // Renting car for 1 week.
+        user.rentCar(carToRent, Pricing.WEEK);
+
+        return "redirect:/dashboard/cars";
+    }
+
+    @PostMapping("/rent/month/{carId}")
+    public String rentCarMonth(@PathVariable String carId, User user, CarLot carLot) {
+
+        // Car object with all necessary data. (id, name, price, etc.)
+        AvailableCar carToRent = (AvailableCar) carLot.findCarById(Integer.parseInt(carId));
+
+        // Renting car for 1 month.
+        user.rentCar(carToRent, Pricing.MONTH);
+
         return "redirect:/dashboard/cars";
     }
 }

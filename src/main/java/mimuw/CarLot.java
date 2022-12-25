@@ -112,4 +112,13 @@ public class CarLot {
         car.setGearbox(resultSet.getString("gearbox"));
         car.setCategory(resultSet.getString("category"));
     }
+
+    public Car findCarById(int carId) {
+        for (Car car : cars) {
+            if (car.getCarId() == carId) {
+                return car;
+            }
+        }
+        return null;
+    }
 }

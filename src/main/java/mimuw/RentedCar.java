@@ -31,7 +31,7 @@ public class RentedCar extends Car {
         System.out.println("Extending rental period of car with id: " + carId + " by one day");
         var connection = DatabaseManager.getInstance().connection();
         try {
-            // TODO: Update money spent by user.
+            // TODO: Update money spent by user and his status, like in 'rentCar' method.
             String sql = "UPDATE rental SET end_date = end_date + 1 WHERE car_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, carId);

@@ -5,10 +5,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import mimuw.data.DatabaseManager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 @Data
 public class User {
@@ -69,6 +69,45 @@ public class User {
         } catch (SQLException ex) {
             System.out.println("Failed to create statement.");
             throw new RuntimeException(ex);
+        }
+    }
+
+    public void rentCar(AvailableCar car, Pricing days) {
+        int amount = switch (days) {
+            case DAY -> Integer.parseInt(car.getDayRate());
+            case WEEK -> Integer.parseInt(car.getWeekRate());
+            case MONTH -> Integer.parseInt(car.getMonthRate());
+        };
+        // Updating user's info to properly display amount spent in dashboard.
+        amountSpent += amount;
+        // TODO: Update user status if needed.
+
+        var connection = DatabaseManager.getInstance().connection();
+        try {
+            // Updating user's amount spent.
+            PreparedStatement statement = connection.prepareStatement("UPDATE Users SET amount_spent = ? WHERE login = ?");
+            statement.setInt(1, amountSpent + amount);
+            statement.setString(2, login);
+            statement.executeUpdate();
+
+            // Inserting new rent into database.
+            String sql = "INSERT INTO Rental VALUES(?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, login);
+            statement.setInt(2, car.getCarId());
+
+            // Getting current date.
+            Date today = new Date(System.currentTimeMillis());
+            Date returnDay = new Date(today.getTime() + days.getDays() * 24 * 60 * 60 * 1000);
+
+            statement.setDate(3, today);
+            statement.setDate(4, returnDay);
+
+            // Executing update on database.
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed to create statement.");
+            throw new RuntimeException(e);
         }
     }
 }
