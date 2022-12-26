@@ -19,7 +19,15 @@
         <div class="mask">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="text-white">
-
+                    <form class="button-logout" method="POST"
+                          th:action="@{/dashboard/logout}">
+                        <input type="hidden"/>
+                        <a
+                                class="btn btn-outline-danger btn-lg m-2"
+                                style="position: absolute; right: 30px; top: 30px;"
+                                onclick="this.parentNode.submit();">
+                            Logout</a>
+                    </form>
                     <div class="title-1">
                         <a title="Back to dashboard" href="../dashboard">
                             <img src="/static/background/logo.png" th:src="@{/background/logo.png}"

@@ -23,6 +23,16 @@
         <div class="mask" style="background-color: rgba(0,0,0,0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="text-white">
+                    <form class="button-logout" method="POST"
+                          th:action="@{/dashboard/logout}">
+                        <input type="hidden"/>
+                        <a
+                                class="btn btn-outline-danger btn-lg m-2"
+                                style="position: absolute; right: 60px; top: 60px;"
+                                onclick="this.parentNode.submit();">
+                            Logout</a>
+                    </form>
+
                     <h1 class="main-1">TopG Car Rental</h1>
                     <h5 class="main-2" th:text="${'Welcome back, ' + user.name + ' ' + user.surname + '!'}">
                         Welcome back, John Doe!
