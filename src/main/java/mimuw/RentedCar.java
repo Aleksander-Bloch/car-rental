@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import mimuw.data.DatabaseManager;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @EqualsAndHashCode(callSuper = true)
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 public class RentedCar extends Car {
     private String startDate;
     private String endDate;
+    private int dayRate;
 
     public static void removeRentedCar(int carId) {
         System.out.println("Removing rented car with id: " + carId + " from database...");
@@ -27,15 +29,17 @@ public class RentedCar extends Car {
         }
     }
 
-    public static void extendRentalPeriod(int carId) {
+    public void extendRentalPeriod(int carId, User user) {
         System.out.println("Extending rental period of car with id: " + carId + " by one day");
         var connection = DatabaseManager.getInstance().connection();
         try {
-            // TODO: Update money spent by user and his status, like in 'rentCar' method.
             String sql = "UPDATE rental SET end_date = end_date + 1 WHERE car_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, carId);
             statement.executeUpdate();
+
+            // TODO: Update money spent by user and his status, like in 'rentCar' method.
+            user.updateAmountSpent(dayRate, connection);
         } catch (SQLException ex) {
             System.out.println("Failed to create statement.");
             throw new RuntimeException(ex);

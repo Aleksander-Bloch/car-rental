@@ -79,20 +79,14 @@ public class User {
             case MONTH -> Integer.parseInt(car.getMonthRate());
         };
         // Updating user's info to properly display amount spent in dashboard.
-        amountSpent += amount;
-        // TODO: Update user status if needed.
 
         var connection = DatabaseManager.getInstance().connection();
         try {
             // Updating user's amount spent.
-            PreparedStatement statement = connection.prepareStatement("UPDATE Users SET amount_spent = ? WHERE login = ?");
-            statement.setInt(1, amountSpent + amount);
-            statement.setString(2, login);
-            statement.executeUpdate();
+            updateAmountSpent(amount, connection);
 
             // Inserting new rent into database.
-            String sql = "INSERT INTO Rental VALUES(?, ?, ?, ?)";
-            statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Rental VALUES(?, ?, ?, ?)");
             statement.setString(1, login);
             statement.setInt(2, car.getCarId());
 
@@ -108,6 +102,28 @@ public class User {
         } catch (SQLException e) {
             System.out.println("Failed to create statement.");
             throw new RuntimeException(e);
+        }
+    }
+
+    public void updateAmountSpent(int amount, Connection connection) throws SQLException {
+        amountSpent += amount;
+        String updatedStatus = Status.assignStatus(amountSpent);
+        boolean isStatusUpdated = false;
+        if (!status.equals(updatedStatus)) {
+            status = updatedStatus;
+            isStatusUpdated = true;
+        }
+        PreparedStatement statement = connection.prepareStatement("UPDATE Users SET amount_spent = ? WHERE login = ?");
+        statement.setInt(1, amountSpent);
+        statement.setString(2, login);
+        statement.executeUpdate();
+
+        if (isStatusUpdated) {
+            String sql = "UPDATE Users SET status = ? WHERE login = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, status);
+            statement.setString(2, login);
+            statement.executeUpdate();
         }
     }
 }

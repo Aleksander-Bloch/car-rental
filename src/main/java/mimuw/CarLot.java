@@ -24,7 +24,7 @@ public class CarLot {
         var connection = DatabaseManager.getInstance().connection();
         try {
             // Retrieving user's cars from the database.
-            String sql = "SELECT * FROM rental A LEFT JOIN car B ON A.car_id = B.car_id WHERE login = ?";
+            String sql = "SELECT * FROM rental A LEFT JOIN car B ON A.car_id = B.car_id LEFT JOIN price C ON A.car_id = C.car_id WHERE login = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getLogin());
 
@@ -39,6 +39,7 @@ public class CarLot {
                 // Rental data.
                 car.setStartDate(getDate(resultSet.getString("start_date")));
                 car.setEndDate(getDate(resultSet.getString("end_date")));
+                car.setDayRate(resultSet.getInt("day_rate"));
 
                 cars.add(car);
             }

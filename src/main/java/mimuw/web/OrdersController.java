@@ -2,12 +2,12 @@ package mimuw.web;
 
 import lombok.extern.slf4j.Slf4j;
 import mimuw.CarLot;
+import mimuw.RentedCar;
 import mimuw.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import static mimuw.RentedCar.removeRentedCar;
-import static mimuw.RentedCar.extendRentalPeriod;
 
 @Slf4j
 @Controller
@@ -40,9 +40,10 @@ public class OrdersController {
     }
 
     @PostMapping("/extend/{carId}")
-    public String extendOrder(@PathVariable String carId) {
+    public String extendOrder(@PathVariable String carId, User user, CarLot carLot) {
 
-        extendRentalPeriod(Integer.parseInt(carId));
+        RentedCar rentedCar = (RentedCar) carLot.findCarById(Integer.parseInt(carId));
+        rentedCar.extendRentalPeriod(Integer.parseInt(carId), user);
 
         return "redirect:/dashboard/orders";
     }

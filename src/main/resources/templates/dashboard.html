@@ -38,6 +38,9 @@
                         <span th:text="${user.status}" th:if="${user.status == 'Bronze'}"
                               class="bronze-status" th:class="bronze-status">Bronze</span>
 
+                        <span th:text="${user.status}" th:if="${user.status == 'Silver'}"
+                              class="silver-status" th:class="silver-status">Silver</span>
+
                         <span th:text="${user.status}" th:if="${user.status == 'Gold'}"
                               class="gold-status" th:class="gold-status">Gold</span>
 
