@@ -24,14 +24,13 @@
                     <div class="title-1">
                         <a title="Back to dashboard" href="../dashboard">
                             <img src="/static/background/logo.png" th:src="@{/background/logo.png}"
-                                style="background: transparent; width: 10%; height: auto;" alt="...">
+                                 style="background: transparent; width: 10%; height: auto;" alt="...">
                         </a>
                         <h1 style="margin-bottom: 5px;">TopG Car Rental</h1>
                     </div>
-                    <h5>Available cars:</h5>
 
                     <!-- brand, year, gearbox, category - select; horsepower, mileage - range; -->
-                    <form method="POST" th:object="${filterData}">
+                    <form method="POST" th:object="${filterData}" style="margin-top: 50px; margin-bottom: 50px;">
                         <div class="row" style="justify-content: center;">
                             <!-- Brand selection -->
                             <div class="col-sm-2">
@@ -89,21 +88,21 @@
                             </div>
                         </div>
 
+                        <div class="row" style="justify-content: center; margin-top: 10px; margin-bottom: 20px;">
+                            <output id="hpOutput">MIN Horsepower: -</output>
+                            <input th:field="*{selectedMinHorsepower}" type="range" class="form-range"
+                                   th:attr="min=${filterData.minHP}, max=${filterData.maxHP}, value=${filterData.minHP}"
+                                   id="hpRange"
+                                   oninput="hpOutput.value = 'MIN Horsepower: ' + hpRange.value" style="width: 25%;">
+                        </div>
+                        <div class="row" style="justify-content: center; margin-top: 10px; margin-bottom: 20px;">
+                            <output id="milOutput">MAX Mileage: -</output>
+                            <input th:field="*{selectedMaxMileage}" type="range" class="form-range"
+                                   th:attr="min=${filterData.minMileage}, max=${filterData.maxMileage}, value=${filterData.maxMileage}"
+                                   id="milRange" oninput="milOutput.value = 'MAX Mileage: ' + milRange.value"
+                                   style="width: 25%;">
+                        </div>
 
-                        <!-- TODO: add range sliders for horsepower and mileage -->
-
-                        <!--                    <div>-->
-                        <!--                        <label for="customRange1">Volume</label>-->
-                        <!--                        <input type="range" class="form-range" min="0" max="5" id="customRange1"-->
-                        <!--                               style="width: 25%;">-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label for="customRange2">Volume</label>-->
-                        <!--                        <input type="range" class="form-range" min="0" max="5" id="customRange2"-->
-                        <!--                               style="width: 25%;">-->
-                        <!--                    </div>-->
-
-                        <!-- TODO: add button-filter -->
                         <button class="button-login" type="submit">Filter</button>
                     </form>
 

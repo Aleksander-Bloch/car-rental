@@ -37,8 +37,6 @@ public class RentedCar extends Car {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, carId);
             statement.executeUpdate();
-
-            // TODO: Update money spent by user and his status, like in 'rentCar' method.
             user.updateAmountSpent(dayRate, connection);
         } catch (SQLException ex) {
             System.out.println("Failed to create statement.");

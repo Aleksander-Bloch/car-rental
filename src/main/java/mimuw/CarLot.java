@@ -67,6 +67,12 @@ public class CarLot {
         if (!filter.getSelectedCategory().equals(FilterData.NULL)) {
             conditions += " AND category = '" + filter.getSelectedCategory() + "'";
         }
+        if (filter.getSelectedMinHorsepower() != -1) {
+            conditions += " AND horsepower >= " + filter.getSelectedMinHorsepower();
+        }
+        if (filter.getSelectedMaxMileage() != -1) {
+            conditions += " AND mileage <= " + filter.getSelectedMaxMileage();
+        }
         return sql + conditions;
     }
 
