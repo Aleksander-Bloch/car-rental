@@ -45,7 +45,7 @@ public class FilterData {
         ArrayList<String> options = new ArrayList<>();
 
         // Retrieving all possible values for given column.
-        String sql = "SELECT DISTINCT " + column + " FROM car";
+        String sql = "SELECT DISTINCT " + column + " FROM car ORDER BY " + column;
         Statement statement = connection.createStatement();
         var resultSet = statement.executeQuery(sql);
 
