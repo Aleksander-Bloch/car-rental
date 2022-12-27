@@ -13,7 +13,7 @@ import org.springframework.validation.Errors;
 @Slf4j
 @Controller
 @RequestMapping("/login")
-@SessionAttributes("user")
+@SessionAttributes({"user", "alertData"})
 public class LoginController {
 
     @GetMapping

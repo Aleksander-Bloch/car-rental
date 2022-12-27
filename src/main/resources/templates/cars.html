@@ -101,7 +101,10 @@
                             <input type="range" class="form-range"
                                    th:attr="min=${filterData.minHP}, max=${filterData.maxHP}"
                                    id="hpRange"
-                                   oninput="hpOutput.value = 'MIN Horsepower: ' + hpRange.value" style="width: 25%;">
+                                   oninput="hpOutput.value = 'MIN Horsepower: ' + hpRange.value;
+                                            document.getElementById('usedFlag1').value = this.value"
+                                   style="width: 25%;">
+                            <input hidden th:field="*{selectedMinHorsepower}" id="usedFlag1" value="-1">
                         </div>
 
                         <div class="row" style="justify-content: center; margin-top: 10px; margin-bottom: 20px;">
@@ -112,6 +115,7 @@
                                    oninput="milOutput.value = 'MAX Mileage: ' + milRange.value;
                                             document.getElementById('usedFlag2').value = this.value"
                                    style="width: 25%;">
+                            <input hidden th:field="*{selectedMaxMileage}" id="usedFlag2" value="-1">
                         </div>
 
                         <button class="button-login" type="submit">Filter</button>

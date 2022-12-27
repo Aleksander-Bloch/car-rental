@@ -16,11 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 public class DashboardController {
 
     @GetMapping
-    public String dashboard(User user) {
-        if (user.getLogin() == null) {
-            return "redirect:/login";
-        }
-
+    public String dashboard() {
         return "dashboard";
     }
 
