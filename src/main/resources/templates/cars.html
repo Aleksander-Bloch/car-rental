@@ -38,7 +38,7 @@
                     </div>
 
                     <!-- brand, year, gearbox, category - select; horsepower, mileage - range; -->
-                    <form method="POST" th:object="${filterData}" style="margin-top: 50px; margin-bottom: 50px;">
+                    <form method="POST" th:object="${filterData}" style="margin-top: 30px; margin-bottom: 20px;">
                         <div class="row" style="justify-content: center;">
                             <!-- Brand selection -->
                             <div class="col-sm-2">
@@ -98,23 +98,36 @@
 
                         <div class="row" style="justify-content: center; margin-top: 10px; margin-bottom: 20px;">
                             <output id="hpOutput">MIN Horsepower: -</output>
-                            <input th:field="*{selectedMinHorsepower}" type="range" class="form-range"
-                                   th:attr="min=${filterData.minHP}, max=${filterData.maxHP}, value=${filterData.minHP}"
+                            <input type="range" class="form-range"
+                                   th:attr="min=${filterData.minHP}, max=${filterData.maxHP}"
                                    id="hpRange"
                                    oninput="hpOutput.value = 'MIN Horsepower: ' + hpRange.value" style="width: 25%;">
                         </div>
 
-                        <!--TODO: Set initial value of slider to max-->
                         <div class="row" style="justify-content: center; margin-top: 10px; margin-bottom: 20px;">
                             <output id="milOutput">MAX Mileage: -</output>
-                            <input th:field="*{selectedMaxMileage}" type="range" class="form-range"
-                                   th:attr="min=${filterData.minMileage}, max=${filterData.maxMileage}, value=${filterData.maxMileage}"
-                                   id="milRange" oninput="milOutput.value = 'MAX Mileage: ' + milRange.value"
+                            <input type="range" class="form-range"
+                                   th:attr="min=${filterData.minMileage}, max=${filterData.maxMileage}"
+                                   id="milRange"
+                                   oninput="milOutput.value = 'MAX Mileage: ' + milRange.value;
+                                            document.getElementById('usedFlag2').value = this.value"
                                    style="width: 25%;">
                         </div>
 
                         <button class="button-login" type="submit">Filter</button>
                     </form>
+
+                    <div th:if="${alertData.type != 'none'}">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"
+                             style="width: 50%; margin-left: 25%">
+
+                        <span th:text="${alertData.message}">
+                            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                        </span>
+
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-sm-6" th:each="car : ${carLot.cars}">
@@ -123,7 +136,9 @@
                                     <h2 class="card-title" th:text="${car.brand + ' ' + car.model}">Mercedes-Benz
                                         GTR</h2>
                                     <h5 class="card-text" th:text="${car.category}">Supercar</h5>
-                                    <p class="card-text" th:text="${car.horsepower + 'HP, ' + car.year + ', ' + car.mileage + ' miles, ' + car.gearbox}">This will include car specs.</p>
+                                    <p class="card-text"
+                                       th:text="${car.horsepower + 'HP, ' + car.year + ', ' + car.mileage + ' miles, ' + car.gearbox}">
+                                        This will include car specs.</p>
                                 </div>
 
                                 <!-- Horizontal line dividing image from car data -->

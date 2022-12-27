@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @RequestMapping("dashboard/cars")
-@SessionAttributes({"user", "carLot", "filterData"})
+@SessionAttributes({"user", "carLot", "filterData", "alertData"})
 public class AvailableCarsController {
 
     @ModelAttribute(name = "carLot")
@@ -21,15 +21,17 @@ public class AvailableCarsController {
         return new FilterData();
     }
 
-    @GetMapping
-    public String availableCars(User user, CarLot carLot, FilterData filter) {
-        if (user.getLogin() == null) {
-            return "redirect:/login";
-        }
+    @ModelAttribute(name = "alertData")
+    public AlertData alertData() {
+        return new AlertData();
+    }
 
+    @GetMapping
+    public String availableCars(CarLot carLot, FilterData filter, AlertData alertData) {
         carLot.getAvailableCars(filter);
         // Clearing filters after each request.
         filter.clearFilters();
+        alertData.clearAlert();
 
         return "cars";
     }
@@ -42,37 +44,40 @@ public class AvailableCarsController {
     }
 
     @PostMapping("/rent/day/{carId}")
-    public String rentCarDay(@PathVariable String carId, User user, CarLot carLot) {
+    public String rentCarDay(@PathVariable String carId, User user, CarLot carLot, AlertData alertData) {
 
         // Car object with all necessary data. (id, name, price, etc.)
         AvailableCar carToRent = (AvailableCar) carLot.findCarById(Integer.parseInt(carId));
 
         // Renting car for 1 day.
         user.rentCar(carToRent, Pricing.DAY);
+        alertData.setAlert(AlertType.RENT_DAY);
 
         return "redirect:/dashboard/cars";
     }
 
     @PostMapping("/rent/week/{carId}")
-    public String rentCarWeek(@PathVariable String carId, User user, CarLot carLot) {
+    public String rentCarWeek(@PathVariable String carId, User user, CarLot carLot, AlertData alertData) {
 
         // Car object with all necessary data. (id, name, price, etc.)
         AvailableCar carToRent = (AvailableCar) carLot.findCarById(Integer.parseInt(carId));
 
         // Renting car for 1 week.
         user.rentCar(carToRent, Pricing.WEEK);
+        alertData.setAlert(AlertType.RENT_WEEK);
 
         return "redirect:/dashboard/cars";
     }
 
     @PostMapping("/rent/month/{carId}")
-    public String rentCarMonth(@PathVariable String carId, User user, CarLot carLot) {
+    public String rentCarMonth(@PathVariable String carId, User user, CarLot carLot, AlertData alertData) {
 
         // Car object with all necessary data. (id, name, price, etc.)
         AvailableCar carToRent = (AvailableCar) carLot.findCarById(Integer.parseInt(carId));
 
         // Renting car for 1 month.
         user.rentCar(carToRent, Pricing.MONTH);
+        alertData.setAlert(AlertType.RENT_MONTH);
 
         return "redirect:/dashboard/cars";
     }

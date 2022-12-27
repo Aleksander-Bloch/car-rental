@@ -22,23 +22,45 @@
     >
         <div class="mask" style="background-color: rgba(0,0,0,0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
-                <div class="text-white">
+                <div class="text-white" style="width: 30%">
                     <h1 class="main-1" style="margin-bottom: 20px">TopG Car Rental</h1>
 
                     <!-- User information form -->
                     <form method="POST" th:object="${user}">
+                        <div th:if="${alertData.type == 'logout'}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+                        <span th:text="${alertData.message}">
+                            <strong>Holy guacamole!</strong> You should check below.
+                        </span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        </div>
+
+                        <div th:if="${alertData.type == 'failed'}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
+                        <span th:text="${alertData.message}">
+                            <strong>Holy guacamole!</strong> You should check below.
+                        </span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        </div>
+
                         <!-- Login input -->
-                        <div class="form-group" style="margin-bottom: 15px">
+                        <div class="form-group" style="margin-bottom: 15px; padding-left: 20%; padding-right: 20%">
                             <input type="text" th:field="*{login}" class="form-control" placeholder="Login">
                         </div>
 
                         <!-- Password input -->
-                        <div class="form-group" style="margin-bottom: 15px;">
+                        <div class="form-group" style="margin-bottom: 15px;  padding-left: 20%; padding-right: 20%">
                             <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
                         </div>
 
                         <!-- Formatted login button -->
-                        <button class="button-login" style="margin-bottom: 20px">Log In</button>
+                        <button class="button-login" style="margin-bottom: 20px; padding: 11px 40px">Log In</button>
                     </form>
 
                 </div>

@@ -73,7 +73,7 @@ public class FilterData {
             minHP = getFilterRangeBounds("horsepower", connection, true);
             maxHP = getFilterRangeBounds("horsepower", connection, false);
             minMileage = getFilterRangeBounds("mileage", connection, true);
-            System.out.println("Min mileage:" + minMileage);
+            System.out.println("Min mileage: " + minMileage);
             maxMileage = getFilterRangeBounds("mileage", connection, false);
             System.out.println("Max mileage: " + maxMileage);
 

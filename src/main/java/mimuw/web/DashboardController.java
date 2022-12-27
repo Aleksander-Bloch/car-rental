@@ -28,6 +28,6 @@ public class DashboardController {
     public String logout(SessionStatus sessionStatus) {
         System.out.println("Logging out...");
         sessionStatus.setComplete();
-        return "redirect:/login";
+        return "redirect:/login/logout";
     }
 }
