@@ -39,7 +39,7 @@ public class CarLot {
                 // Rental data.
                 car.setStartDate(getDate(resultSet.getString("start_date")));
                 car.setEndDate(getDate(resultSet.getString("end_date")));
-                car.setDayRate(resultSet.getInt("day_rate"));
+                car.setDayRate(Status.applyDiscount(user.getStatus(), resultSet.getInt("day_rate")));
 
                 cars.add(car);
             }
@@ -76,7 +76,7 @@ public class CarLot {
         return sql + conditions;
     }
 
-    public void getAvailableCars(FilterData filter) {
+    public void getAvailableCars(FilterData filter, String status) {
         // Clear car lot on reload.
         cars.clear();
         System.out.println("Querying for all available cars...");
@@ -95,9 +95,9 @@ public class CarLot {
                 downloadCar(resultSet, car);
 
                 // Pricing data.
-                car.setDayRate(resultSet.getString("day_rate"));
-                car.setWeekRate(resultSet.getString("week_rate"));
-                car.setMonthRate(resultSet.getString("month_rate"));
+                car.setDayRate(Status.applyDiscount(status, resultSet.getInt("day_rate")));
+                car.setWeekRate(Status.applyDiscount(status, resultSet.getInt("week_rate")));
+                car.setMonthRate(Status.applyDiscount(status, resultSet.getInt("month_rate")));
 
                 // Adding car to the car lot.
                 cars.add(car);

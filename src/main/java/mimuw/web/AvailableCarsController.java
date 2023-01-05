@@ -27,8 +27,8 @@ public class AvailableCarsController {
     }
 
     @GetMapping
-    public String availableCars(CarLot carLot, FilterData filter, AlertData alertData) {
-        carLot.getAvailableCars(filter);
+    public String availableCars(CarLot carLot, FilterData filter, AlertData alertData, User user) {
+        carLot.getAvailableCars(filter, user.getStatus());
         // Clearing filters after each request.
         filter.clearFilters();
         alertData.clearAlert();

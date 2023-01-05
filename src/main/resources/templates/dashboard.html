@@ -58,6 +58,23 @@
                               class="platinum-status" th:class="platinum-status">Platinum</span>
                     </h5>
 
+                    <!-- Rendering one of the loyalty discounts -->
+                    <h5 class="main-2">
+                        Loyalty discount:
+
+                        <span th:if="${user.status == 'Bronze'}"
+                              class="bronze-status" th:class="bronze-status">0%</span>
+
+                        <span th:if="${user.status == 'Silver'}"
+                              class="silver-status" th:class="silver-status">10%</span>
+
+                        <span th:if="${user.status == 'Gold'}"
+                              class="gold-status" th:class="gold-status">25%</span>
+
+                        <span th:if="${user.status == 'Platinum'}"
+                              class="platinum-status" th:class="platinum-status">50%</span>
+                    </h5>
+
                     <!-- Cars rented by the user -->
                     <a
                             class="btn btn-outline-light btn-lg m-2"

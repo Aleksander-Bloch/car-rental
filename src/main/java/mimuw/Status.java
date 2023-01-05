@@ -23,4 +23,16 @@ public enum Status {
             return "Bronze";
         }
     }
+
+    public static int applyDiscount(String status, int rate) {
+        double discount =  switch (status) {
+            case "Platinum" -> 0.5;
+            case "Gold" -> 0.25;
+            case "Silver" -> 0.1;
+            default -> 0.0;
+        };
+
+        // Return discounted rate.
+        return (int) ((1 - discount) * rate);
+    }
 }

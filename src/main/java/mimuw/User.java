@@ -74,9 +74,9 @@ public class User {
 
     public void rentCar(AvailableCar car, Pricing days) {
         int amount = switch (days) {
-            case DAY -> Integer.parseInt(car.getDayRate());
-            case WEEK -> Integer.parseInt(car.getWeekRate());
-            case MONTH -> Integer.parseInt(car.getMonthRate());
+            case DAY -> car.getDayRate();
+            case WEEK -> car.getWeekRate();
+            case MONTH -> car.getMonthRate();
         };
         // Updating user's info to properly display amount spent in dashboard.
 
