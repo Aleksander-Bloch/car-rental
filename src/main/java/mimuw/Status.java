@@ -32,7 +32,7 @@ public enum Status {
             default -> 0.0;
         };
 
-        // Return discounted rate.
-        return (int) ((1 - discount) * rate);
+        // Return discounted rate rounded down to tenth place.
+        return (int) ((1 - discount) * rate) / 10 * 10;
     }
 }
